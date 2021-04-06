@@ -4,14 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.tcanationals.timer-desktop",
+    "productName": "TCA Timer",
+    "nsis": {
+      "createDesktopShortcut": false,
+      "runAfterFinish": false,
+      "perMachine": true
+    }
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^12.0.2"
+    "electron-positioner": "^4.1.0",
+    "electron-util": "^0.14.2",
+    "menubar": "^9.0.3",
+    "yargs": "^16.2.0"
   },
-  "scripts": {
-    "start": "electron ."
+  "devDependencies": {
+    "electron-builder": "^22.10.5",
+    "electron": "^12.0.2"
   }
 }
