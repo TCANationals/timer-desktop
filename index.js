@@ -1,11 +1,10 @@
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
 const electron = require('electron')
 const { app, BrowserWindow } = require('electron')
-const { is } = require('electron-util')
-const path = require('path')
+const { parse } = require('./args')
 
 const TrayGenerator = require('./TrayGenerator')
+
+const { args, opts } = parse()
 
 const displayWidth = 400
 const displayHeight = 100
@@ -77,7 +76,6 @@ const createMainWindow = () => {
     y: position.y,
     skipTaskbar: true,
     webPreferences: {
-      //devTools: is.development,
       nodeIntegration: true,
     }
   })
@@ -91,12 +89,7 @@ const createMainWindow = () => {
     mainWindow.webContents.insertCSS('html, body{ overflow: hidden !important;}')
   });
 
-  if (is.development) {
-    //mainWindow.webContents.openDevTools({ mode: 'detach' })
-    mainWindow.loadURL(initUrl);
-  } else {
-    mainWindow.loadURL(initUrl);
-  }
+  mainWindow.loadURL(initUrl)
 }
 
 app.on('ready', () => {
@@ -109,10 +102,11 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
-const args = yargs(hideBin(process.argv))
+console.log(args)
+console.log(opts)
 
-if (args.url) {
-  initUrl = args.url
+if (opts.url) {
+  initUrl = opts.url
 }
 
 const runStartup = () => {
