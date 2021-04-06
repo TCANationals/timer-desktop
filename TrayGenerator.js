@@ -53,7 +53,7 @@ class TrayGenerator {
     dialog.showMessageBox(null, options).then(res => {
       if (res.response === 0){
         //Yes button pressed
-        app.quit()
+        this.mainWindow.close()
       }
       else if (res.response === 1) {
         //No button pressed

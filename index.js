@@ -9,6 +9,8 @@ const { args, opts } = parse()
 const displayWidth = 400
 const displayHeight = 100
 
+const showDevtools = false
+
 let initUrl = 'https://timer.tcanationals.com/tca1'
 let mainWindow = null
 let trayIcon = null
@@ -76,17 +78,24 @@ const createMainWindow = () => {
     y: position.y,
     skipTaskbar: true,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      devTools: showDevtools,
     }
   })
   
   mainWindow.setAlwaysOnTop(true, 'pop-up-menu')
-  mainWindow.setIgnoreMouseEvents(true)
   setupDisplayChangeCheck()
 
-  // Ensure no overflow is shown
-  mainWindow.webContents.on('did-finish-load', function() {
-    mainWindow.webContents.insertCSS('html, body{ overflow: hidden !important;}')
+  if (showDevtools) {
+    mainWindow.webContents.openDevTools({mode: 'undocked'})
+  } else {
+    mainWindow.setIgnoreMouseEvents(true)
+  }
+
+  // Ensure no overflow is shown & blank out background
+  mainWindow.webContents.on('dom-ready', function() {
+    mainWindow.webContents.insertCSS('html, body { overflow: hidden !important }')
+    mainWindow.webContents.insertCSS('html, body { background-color: transparent !important }')
   });
 
   mainWindow.loadURL(initUrl)
@@ -101,9 +110,6 @@ app.on('ready', () => {
 app.on('window-all-closed', () => {
   app.quit()
 })
-
-console.log(args)
-console.log(opts)
 
 if (opts.url) {
   initUrl = opts.url
