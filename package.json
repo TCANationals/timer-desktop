@@ -1,20 +1,36 @@
 {
   "name": "tca-timer-desktop",
-  "version": "1.0.1",
+  "version": "1.0.2",
+  "repository": "https://github.com/TCANationals/timer-desktop.git",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder --publish always"
   },
   "build": {
     "appId": "com.tcanationals.timer-desktop",
     "productName": "TCA Timer",
+    "publish": {
+      "provider": "github"
+    },
+    "win": {
+      "target": {
+        "target": "nsis-web",
+        "arch": [
+          "ia32",
+          "x64"
+        ]
+      }
+    },
     "nsis": {
       "createDesktopShortcut": false,
       "runAfterFinish": false,
       "perMachine": true
+    },
+    "nsisWeb": {
+      "oneClick": true
     }
   },
   "author": "",
