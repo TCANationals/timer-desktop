@@ -1,6 +1,6 @@
 {
   "name": "tca-timer-desktop",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": "https://github.com/TCANationals/timer-desktop.git",
   "description": "",
   "main": "index.js",
@@ -67,7 +67,7 @@
     "menubar": "^9.0.3"
   },
   "devDependencies": {
-    "electron": "^12.0.2",
-    "electron-builder": "^22.10.5"
+    "electron": "^13.1.2",
+    "electron-builder": "^22.11.7"
   }
 }

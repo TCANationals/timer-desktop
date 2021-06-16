@@ -101,11 +101,23 @@ const createMainWindow = () => {
   mainWindow.loadURL(initUrl)
 }
 
-app.on('ready', () => {
-  setTimeout(function() {
-    runStartup()
-  }, 300)
-})
+const appLock = app.requestSingleInstanceLock()
+
+if (!appLock) {
+  // Already have an instance running, quit...
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // TODO: Notify on second instance???
+  })
+
+  // Create myWindow, load the app
+  app.on('ready', () => {
+    setTimeout(function() {
+      runStartup()
+    }, 300)
+  })
+}
 
 app.on('window-all-closed', () => {
   app.quit()
