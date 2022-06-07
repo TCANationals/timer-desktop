@@ -1,4 +1,7 @@
 const electron = require('electron')
+const fs = require('fs')
+const os = require('os')
+const childExec = require('child_process').execFile;
 const { app, BrowserWindow } = require('electron')
 const { parse } = require('./args')
 
@@ -14,9 +17,37 @@ const showDevtools = false
 let initUrl = 'https://timer.tcanationals.com/tca1'
 let mainWindow = null
 let trayIcon = null
+let updateBgInfo = false
+let bgInfoPath = `C:\\ProgramData\\chocolatey\\lib\\sysinternals\\tools\\Bginfo64.exe`
+let bgInfoConfig = `C:\\Packer\\Config\\logon.bgi`
 
 // Disable HTTP cache
 app.commandLine.appendSwitch ("disable-http-cache")
+
+const populateVariables = () => {
+  console.log(`Running on ${os.platform()}`)
+  if (os.platform() != 'win32') {
+    return
+  }
+  if (!fs.existsSync(bgInfoPath)) {
+    return
+  }
+  if (!fs.existsSync(bgInfoConfig)) {
+    return
+  }
+  updateBgInfo = true
+}
+
+const executeResolutionChangeProcesses = () => {
+  console.log(`Update BGinfo: ${updateBgInfo}`)
+  if (updateBgInfo) {
+    childExec(bgInfoPath, [bgInfoConfig, '/timer:0', '/silent', '/nolicprompt'], function(err, data) {
+      if (err) {
+         console.error(err);
+      }
+    });
+  }
+}
 
 const getDisplayDimensions = () => {
   const display = electron.screen.getPrimaryDisplay()
@@ -33,6 +64,7 @@ const getWindowPosition = () => {
 }
 
 const updateDisplayPosition = () => {
+  executeResolutionChangeProcesses()
   const position = getWindowPosition()
   mainWindow.setBounds({
     width: displayWidth,
@@ -128,6 +160,7 @@ if (opts.url) {
 }
 
 const runStartup = () => {
+  populateVariables()
   createMainWindow()
   trayIcon = new TrayGenerator(mainWindow)
   trayIcon.createTray()
