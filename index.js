@@ -1,6 +1,8 @@
 const electron = require('electron')
 const fs = require('fs')
 const os = require('os')
+const ffi = require('ffi')
+const ref = require('ref')
 const childExec = require('child_process').execFile;
 const { app, BrowserWindow } = require('electron')
 const { parse } = require('./args')
@@ -14,10 +16,14 @@ const displayHeight = 100
 
 const showDevtools = false
 
+const win32_SHCNE_ALLEVENTS = 0x7FFFFFFF,
+      win32_SHCNF_FLUSHNOWAIT = 0x2000
+
 let initUrl = 'https://timer.tcanationals.com/tca1'
 let mainWindow = null
 let trayIcon = null
 let updateBgInfo = false
+let windowsShell32 = null
 let bgInfoPath = `C:\\ProgramData\\chocolatey\\lib\\sysinternals\\tools\\Bginfo64.exe`
 let bgInfoConfig = `C:\\Packer\\Config\\logon.bgi`
 
@@ -28,6 +34,11 @@ const populateVariables = () => {
   console.log(`Running on ${os.platform()}`)
   if (os.platform() != 'win32') {
     return
+  } else {
+    // Register shell32 to trigger desktop refresh on resize
+    windowsShell32 = ffi.Library('shell32.dll', {
+      SHChangeNotify: ['void',  ['long', 'uint', ref.types.CString, 'pointer']],
+    })
   }
   if (!fs.existsSync(bgInfoPath)) {
     return
@@ -46,6 +57,9 @@ const executeResolutionChangeProcesses = () => {
          console.error(err);
       }
     });
+  }
+  if (windowsShell32) {
+    windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
   }
 }
 
