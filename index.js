@@ -1,8 +1,8 @@
 const electron = require('electron')
 const fs = require('fs')
 const os = require('os')
-const ffi = require('ffi')
-const ref = require('ref')
+const ffi = require('ffi-napi')
+const ref = require('ref-napi')
 const childExec = require('child_process').execFile;
 const { app, BrowserWindow } = require('electron')
 const { parse } = require('./args')
@@ -13,6 +13,7 @@ const { args, opts } = parse()
 
 const displayWidth = 400
 const displayHeight = 100
+const reloadTimeMinutes = 60
 
 const showDevtools = false
 
@@ -59,7 +60,7 @@ const executeResolutionChangeProcesses = () => {
     });
   }
   if (windowsShell32) {
-    windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
+    //windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
   }
 }
 
@@ -142,6 +143,13 @@ const createMainWindow = () => {
   mainWindow.webContents.on('dom-ready', function() {
     mainWindow.webContents.insertCSS('html, body { overflow: hidden !important }')
     mainWindow.webContents.insertCSS('html, body { background-color: transparent !important }')
+    // Setup refresh loop
+    setInterval(() => {
+      if (mainWindow) {
+        console.log('Reloading timer')
+        mainWindow.reload()
+      }
+    }, reloadTimeMinutes * 1000 * 60)
   });
 
   mainWindow.loadURL(initUrl)
