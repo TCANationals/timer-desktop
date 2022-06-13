@@ -1,8 +1,8 @@
 const electron = require('electron')
 const fs = require('fs')
 const os = require('os')
-const ffi = require('ffi-napi')
-const ref = require('ref-napi')
+//const ffi = require('ffi-napi')
+//const ref = require('ref-napi')
 const childExec = require('child_process').execFile;
 const { app, BrowserWindow } = require('electron')
 const { parse } = require('./args')
@@ -37,9 +37,9 @@ const populateVariables = () => {
     return
   } else {
     // Register shell32 to trigger desktop refresh on resize
-    windowsShell32 = ffi.Library('shell32.dll', {
-      SHChangeNotify: ['void',  ['long', 'uint', ref.types.CString, 'pointer']],
-    })
+    // windowsShell32 = ffi.Library('shell32.dll', {
+    //   SHChangeNotify: ['void',  ['long', 'uint', ref.types.CString, 'pointer']],
+    // })
   }
   if (!fs.existsSync(bgInfoPath)) {
     return
@@ -60,7 +60,7 @@ const executeResolutionChangeProcesses = () => {
     });
   }
   if (windowsShell32) {
-    windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
+    //windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
   }
 }
 

@@ -61,7 +61,6 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^5.1.0",
-    "ffi-napi": "^4.0.3",
     "menubar": "^9.0.3"
   },
   "devDependencies": {
