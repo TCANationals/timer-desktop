@@ -60,7 +60,7 @@ const executeResolutionChangeProcesses = () => {
     });
   }
   if (windowsShell32) {
-    //windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
+    windowsShell32.SHChangeNotify(win32_SHCNE_ALLEVENTS, win32_SHCNF_FLUSHNOWAIT, null, null)
   }
 }
 
