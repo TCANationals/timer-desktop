@@ -27,6 +27,12 @@ class TrayGenerator {
 
   rightClickMenu = () => {
     const menu = [
+      {
+        label: 'Refresh',
+        click: () => {
+          this.handleRefresh()
+        }
+      },
         {
           label: 'Quit',
           click: () => {
@@ -35,6 +41,12 @@ class TrayGenerator {
         }
       ];
       this.tray.popUpContextMenu(Menu.buildFromTemplate(menu));
+  }
+
+  handleRefresh = () => {
+    if (this.mainWindow) {
+      this.mainWindow.reload()
+    }
   }
 
   handleQuit = () => {

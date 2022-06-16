@@ -121,6 +121,7 @@ const createMainWindow = () => {
     resizable: false,
     frame: false,
     transparent: true,
+    title: '',
     x: position.x,
     y: position.y,
     skipTaskbar: true,
@@ -129,6 +130,11 @@ const createMainWindow = () => {
       devTools: showDevtools,
     }
   })
+
+  // Don't update form title from site
+  mainWindow.on('page-title-updated', (e, d, c) => {
+    e.preventDefault()
+  });
   
   mainWindow.setAlwaysOnTop(true, 'pop-up-menu')
   setupDisplayChangeCheck()
@@ -144,12 +150,12 @@ const createMainWindow = () => {
     mainWindow.webContents.insertCSS('html, body { overflow: hidden !important }')
     mainWindow.webContents.insertCSS('html, body { background-color: transparent !important }')
     // Setup refresh loop
-    setInterval(() => {
-      if (mainWindow) {
-        console.log('Reloading timer')
-        mainWindow.reload()
-      }
-    }, reloadTimeMinutes * 1000 * 60)
+    // setInterval(() => {
+    //   if (mainWindow) {
+    //     console.log('Reloading timer')
+    //     mainWindow.reload()
+    //   }
+    // }, reloadTimeMinutes * 1000 * 60 * 8) // refresh every 8 hours
   });
 
   mainWindow.loadURL(initUrl)
