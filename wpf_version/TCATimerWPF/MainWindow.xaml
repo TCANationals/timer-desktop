@@ -1,0 +1,38 @@
+﻿<Window x:Name="mainWindow" x:Class="TCATimerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCATimerWPF"
+        mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        AllowsTransparency="True" ShowInTaskbar="False"
+        Title="TCA Timer" Height="450" Width="800" WindowStyle="None" Background="Transparent" Topmost="True" Margin="0,0,0,0">
+   
+    <Window.Resources>
+        <FontFamily x:Key="RobotoMono">/Fonts/#Roboto Mono Medium</FontFamily>
+    </Window.Resources>
+    <Grid Margin="0,0,0,0">
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,0" Name="TimerGrid" Visibility="Visible">
+            <StackPanel Orientation="Horizontal">
+                <local:OutlinedTextBlock x:Name="HourTime" VerticalAlignment="Bottom"
+                           FontSize="80" FontFamily="{StaticResource RobotoMono}"
+                           FontWeight="Bold" Fill="White" Stroke="Black" StrokeThickness="4" Text="1" />
+                <local:OutlinedTextBlock x:Name="HourLabel" VerticalAlignment="Bottom"
+                           FontSize="40" FontFamily="{StaticResource RobotoMono}" Margin="0,0,10,10"
+                           FontWeight="Bold" Fill="Black" Stroke="White" StrokeThickness="3">H</local:OutlinedTextBlock>
+                <local:OutlinedTextBlock x:Name="MinuteTime" VerticalAlignment="Bottom"
+                           FontSize="80" FontFamily="{StaticResource RobotoMono}"
+                           FontWeight="Bold" Fill="White" Stroke="Black" StrokeThickness="4" Text="2" />
+                <local:OutlinedTextBlock x:Name="MinuteLabel" VerticalAlignment="Bottom"
+                           FontSize="40" FontFamily="{StaticResource RobotoMono}" Margin="0,0,10,10"
+                           FontWeight="Bold" Fill="Black" Stroke="White" StrokeThickness="3">M</local:OutlinedTextBlock>
+                <local:OutlinedTextBlock x:Name="SecondTime" VerticalAlignment="Bottom"
+                           FontSize="80" FontFamily="{StaticResource RobotoMono}"
+                           FontWeight="Bold" Fill="White" Stroke="Black" StrokeThickness="4" Text="3" />
+                <local:OutlinedTextBlock x:Name="SecondLabel" VerticalAlignment="Bottom"
+                           FontSize="40" FontFamily="{StaticResource RobotoMono}" Margin="0,0,0,10"
+                           FontWeight="Bold" Fill="Black" Stroke="White" StrokeThickness="3">S</local:OutlinedTextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
