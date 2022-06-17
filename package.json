@@ -1,6 +1,6 @@
 {
   "name": "tca-timer-desktop",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "repository": "https://github.com/TCANationals/timer-desktop.git",
   "description": "TCA Timer Desktop App",
   "main": "index.js",
