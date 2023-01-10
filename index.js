@@ -6,6 +6,7 @@ const os = require('os')
 const childExec = require('child_process').execFile;
 const { app, BrowserWindow } = require('electron')
 const { parse } = require('./args')
+const { findAll } = require('./blinkstick')
 
 const TrayGenerator = require('./TrayGenerator')
 
@@ -27,6 +28,9 @@ let updateBgInfo = false
 let windowsShell32 = null
 let bgInfoPath = `C:\\ProgramData\\chocolatey\\lib\\sysinternals\\tools\\Bginfo64.exe`
 let bgInfoConfig = `C:\\Packer\\Config\\logon.bgi`
+
+let blinkSticks = findAll()
+console.log(blinkSticks)
 
 // Disable HTTP cache
 app.commandLine.appendSwitch ("disable-http-cache")

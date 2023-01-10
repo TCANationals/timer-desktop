@@ -61,7 +61,8 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^9.5.0",
-    "menubar": "^9.2.3"
+    "menubar": "^9.2.3",
+    "node-hid": "^2.1.2"
   },
   "devDependencies": {
     "electron": "^21.3.3",
